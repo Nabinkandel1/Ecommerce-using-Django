@@ -1,5 +1,10 @@
 # eCommerce Django Project
 
+### Installations
+- pip install django-autoslug
+- pip install pillow
+
+
 ### eCommerce Project Features
 - Admin adds the category and products
 - Browses all the products and categories
