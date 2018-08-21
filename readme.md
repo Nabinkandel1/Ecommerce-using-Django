@@ -1,5 +1,18 @@
 # eCommerce Django Project
 
+## Steps
+Steps
+1. Requirements Gathering
+2. Create Project (django-admin startproject ecommerce)
+3. Create App (python manage.py startapp shop)
+4. Create Models
+5. Add app in settings.py
+6. Register app in admin
+7. Create migrations (python manage.py makemigrations shop)
+8. Migrate (python manage.py migrate)
+9. Install dependencies (pip install django-autoslug pillow)
+
+
 ### Installations
 - pip install django-autoslug
 - pip install pillow
