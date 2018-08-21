@@ -11,6 +11,11 @@ Steps
 7. Create migrations (python manage.py makemigrations shop)
 8. Migrate (python manage.py migrate)
 9. Install dependencies (pip install django-autoslug pillow)
+10. Media file handling
+11. Add meta in models
+12. Make urls for frontend
+13. Make views
+14. Create templates
 
 
 ### Installations
