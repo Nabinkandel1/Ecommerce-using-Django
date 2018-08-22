@@ -1,11 +1,10 @@
 # eCommerce Django Project
 
-## Steps
-Steps
+### Steps
 1. Requirements Gathering
 2. Create Project (django-admin startproject ecommerce)
 3. Create App (python manage.py startapp shop)
-4. Create Models
+4. Write Models
 5. Add app in settings.py
 6. Register app in admin
 7. Create migrations (python manage.py makemigrations shop)
@@ -13,9 +12,10 @@ Steps
 9. Install dependencies (pip install django-autoslug pillow)
 10. Media file handling
 11. Add meta in models
-12. Make urls for frontend
-13. Make views
+12. Create urls for frontend
+13. Write views
 14. Create templates
+15. 
 
 
 ### Installations
@@ -29,7 +29,7 @@ Steps
 - Search all the products using filters
 - Add products in cart
 - User can signup and login
-- User can chekout product
+- User can checkout product
 - User can add review for the product
 
 ### System Requirements

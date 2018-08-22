@@ -1,4 +1,9 @@
 
+{%  if user.is_authenticated %}
+    <p>Welcome {{ user.username }} !
+{% else %}
+    <a href="login">Login</a>
+{% endif %}
 <br><br>
 
 Products are <br>
