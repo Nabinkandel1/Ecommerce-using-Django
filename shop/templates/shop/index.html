@@ -1,18 +1,45 @@
+{% extends "shop/base.html" %}
 
-{%  if user.is_authenticated %}
-    <p>Welcome {{ user.username }} !
-{% else %}
-    <a href="login">Login</a>
-{% endif %}
-<br><br>
+{% block content %}
+    <div class="row">
 
-Products are <br>
-{% for p in products %}
-    {{ p.title }} <br>
-{% endfor %}
+        {% for product in products %}
+            <div class="col-lg-4 col-md-6 mb-4">
+              <div class="card h-100">
+                <a href="{% url 'shop:detail' product.slug %}">
+                    <img class="card-img-top" src="/media/{{ product.image }}" alt="">
+                </a>
+                <div class="card-body">
+                  <h4 class="card-title">
+                    <a href="{% url 'shop:detail' product.slug %}">{{ product.title }}</a>
+                  </h4>
+                  <h5>{{ product.price }}</h5>
+                  <p class="card-text">{{ product.description }}</p>
+                </div>
+                <div class="card-footer">
+                  <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                </div>
+              </div>
+            </div>
+        {% endfor %}
 
-<br><br>
-Categories are <br>
-{% for c in categories %}
-    {{ c.title }} <br>
-{% endfor %}
+
+    {%  if user.is_authenticated %}
+        <p>Welcome {{ user.username }} !
+    {% else %}
+        <a href="login">Login</a>
+    {% endif %}
+    <br><br>
+
+    Products are <br>
+    {% for p in products %}
+        {{ p.title }} <br>
+    {% endfor %}
+
+    <br><br>
+    Categories are <br>
+    {% for c in categories %}
+        {{ c.title }} <br>
+    {% endfor %}
+
+{% endblock %}

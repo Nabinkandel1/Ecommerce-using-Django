@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 
 # Create your views here.
 from shop import urls
-from shop.forms import SignUpForm
+from shop.forms import SignUpForm, ReviewForm
 from shop.models import Category, Product, Review
 
 
@@ -18,11 +18,25 @@ def home(request):
 
 
 def details(request, slug):
-    return render(request, "shop/details.html")
+    product = Product.objects.get(slug=slug)
+    reviewform = ReviewForm()
+    data = {"product": product, "reviewform": reviewform}
+    return render(request, "shop/details.html", data)
 
 
 def review(request, slug):
-    pass
+    product = Product.objects.get(slug=slug)
+    if request.method == "POST":
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.product = product
+            review.user = request.user
+            review.save()
+            return redirect('shop:detail', product.slug)
+    else:
+        form = SignUpForm()
+        return render(request, "shop/signup.html", {"form": form})
 
 
 def signup(request):

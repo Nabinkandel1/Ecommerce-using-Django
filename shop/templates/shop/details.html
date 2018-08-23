@@ -1,1 +1,39 @@
-this is detail page
+{% extends "shop/base.html" %}
+{% load bootstrap3 %}
+{% block carousel %}{% endblock %}
+{% block content %}
+
+    <div class="card mt-4">
+            <img class="card-img-top img-fluid" src="/media/{{ product.image }}" alt="">
+            <div class="card-body">
+              <h3 class="card-title">{{ product.title }}</h3>
+              <h4>{{ product.price }}</h4>
+              <p class="card-text">{{ product.description }}</p>
+              <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+              4.0 stars
+            </div>
+          </div>
+          <!-- /.card -->
+
+          <div class="card card-outline-secondary my-4">
+            <div class="card-header">
+              Product Reviews
+            </div>
+            <div class="card-body">
+                {% for rev in product.review_set.all %}
+              <p>{{ rev.review }}</p>
+              <small class="text-muted">Posted by {{ rev.user }} on {{ rev.created }}</small>
+              <hr>
+                {% endfor %}
+              <hr>
+                <form method="POST" action="{% url "shop:review" product.slug %}">
+                    {% csrf_token %}
+                    {% bootstrap_form reviewform %}
+                    <input type="submit" value="Submit your Review" class="btn btn-success">
+
+                </form>
+
+            </div>
+          </div>
+
+{% endblock %}
