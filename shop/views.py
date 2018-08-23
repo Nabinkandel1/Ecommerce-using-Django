@@ -31,14 +31,15 @@ def signup(request):
         if form.is_valid():
             user = form.save(commit=False)
             user.save()
-            return redirect('/login')
+            return redirect('shop:login')
     else:
         form = SignUpForm()
         return render(request, "shop/signup.html", {"form": form})
 
+
 def mylogin(request):
     if request.user.is_authenticated:
-        return redirect("/")
+        return redirect("shop:home")
     if request.method == "POST":
         username = request.POST["username"]
         password = request.POST["password"]
@@ -46,10 +47,10 @@ def mylogin(request):
         if user:
             login(request, user)
             if user.is_active:
-                return redirect("/")
+                return redirect("shop:home")
     return render(request, "shop/login.html")
 
 
 def mylogout(request):
     logout(request)
-    return redirect("/")
+    return redirect("shop:home")
