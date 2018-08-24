@@ -15,12 +15,10 @@
 12. Create urls for frontend
 13. Write views
 14. Create templates
-15. 
 
 
 ### Installations
-- pip install django-autoslug
-- pip install pillow
+- pip install -r requirements.txt
 
 
 ### eCommerce Project Features

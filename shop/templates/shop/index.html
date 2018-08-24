@@ -23,23 +23,12 @@
             </div>
         {% endfor %}
 
+{% endblock %}
 
-    {%  if user.is_authenticated %}
-        <p>Welcome {{ user.username }} !
-    {% else %}
-        <a href="login">Login</a>
+
+{% block cart_count %}
+    {% if carts|length == 0 %} No items
+    {% elif carts|length == 1 %} {{ carts|length }} item
+    {% else %} {{ carts|length }} items
     {% endif %}
-    <br><br>
-
-    Products are <br>
-    {% for p in products %}
-        {{ p.title }} <br>
-    {% endfor %}
-
-    <br><br>
-    Categories are <br>
-    {% for c in categories %}
-        {{ c.title }} <br>
-    {% endfor %}
-
 {% endblock %}

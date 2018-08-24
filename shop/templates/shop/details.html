@@ -4,13 +4,18 @@
 {% block content %}
 
     <div class="card mt-4">
-            <img class="card-img-top img-fluid" src="/media/{{ product.image }}" alt="">
+            <img class="card-img-top img-fluid"
+                 height="200px"
+                 src="/media/{{ product.image }}" alt="">
             <div class="card-body">
               <h3 class="card-title">{{ product.title }}</h3>
               <h4>{{ product.price }}</h4>
               <p class="card-text">{{ product.description }}</p>
               <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
               4.0 stars
+                <p>
+                    <button id="add_to_cart" name="{{ product.slug }}" class="btn btn-success">Add to Cart</button>
+                </p>
             </div>
           </div>
           <!-- /.card -->
@@ -36,4 +41,29 @@
             </div>
           </div>
 
+{% endblock %}
+
+{% block cart_count %}
+    {% if carts|length == 0 %} No items
+    {% elif carts|length == 1 %} {{ carts|length }} item
+    {% else %} {{ carts|length }} items
+    {% endif %}
+{% endblock %}
+
+{% block jscode %}
+    <script>
+        $(document).ready(function () {
+            $('#add_to_cart').on('click', function () {
+                data = {"slug": this.name, "csrfmiddlewaretoken":"{{ csrf_token }}" }
+                $.post("{% url 'shop:add_to_cart' %}", data)
+                    .done(function (response) {
+                        console.log(response);
+                        if (response) {
+                            alert(response.title + " added to cart");
+                            location.reload();
+                        }
+                    })
+            })
+        })
+    </script>
 {% endblock %}
