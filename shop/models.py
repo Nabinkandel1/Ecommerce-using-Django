@@ -15,7 +15,7 @@ class Category(models.Model):
 
     class Meta:
         verbose_name_plural = "Categories"
-        ordering = ["-title"]
+        ordering = ["title"]
 
     def __str__(self):
         return self.title
@@ -29,7 +29,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to="products", blank=True)
     featured = models.BooleanField(default=False)
     active = models.BooleanField(default=True)
-    brand = models.CharField(max_length=200)
+    brand = models.CharField(max_length=200, blank=True)
     shipping = models.TextField(blank=True)
     price = models.DecimalField(default=0, decimal_places=2, max_digits=10)
     created = models.DateTimeField(auto_now_add=True)

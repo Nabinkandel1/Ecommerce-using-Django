@@ -25,7 +25,7 @@ SECRET_KEY = '^j=iw9nx#&y757uq_(9u@)+1aytc5y4bh63agzuoqjt^r9pspz'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', 'ecommerce.hem.info.np']
 
 
 # Application definition
