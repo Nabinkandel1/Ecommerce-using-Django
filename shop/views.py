@@ -46,7 +46,7 @@ def review(request, slug):
             review.product = product
             review.user = request.user
             review.save()
-            return redirect('shop:detail', product.slug)
+        return redirect('shop:detail', product.slug)
     else:
         form = SignUpForm()
         return render(request, "shop/signup.html", {"form": form})

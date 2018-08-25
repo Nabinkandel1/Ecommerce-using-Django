@@ -6,6 +6,11 @@ from shop.models import Review
 
 
 class ReviewForm(forms.ModelForm):
+    def clean_rate(self):
+        data = self.cleaned_data.get("rate", 5)
+        if data < 0 or data > 5:
+            raise forms.ValidationError("rate must be within range 1 to 5")
+        return data
 
     class Meta:
         model = Review

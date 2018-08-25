@@ -14,6 +14,7 @@
               <p class="card-text">{{ product.description }}</p>
               <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
               4.0 stars
+                <p></p>
                 <p>
                     <button id="add_to_cart" name="{{ product.slug }}" class="btn btn-success">Add to Cart</button>
                 </p>
@@ -27,7 +28,7 @@
             </div>
             <div class="card-body">
                 {% for rev in product.review_set.all %}
-              <p>{{ rev.review }}</p>
+              <p>{{ rev.rate }} stars => {{ rev.review }}</p>
               <small class="text-muted">Posted by {{ rev.user }} on {{ rev.created }}</small>
               <hr>
                 {% endfor %}
