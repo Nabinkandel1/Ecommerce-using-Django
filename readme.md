@@ -15,6 +15,10 @@
 12. Create urls for frontend
 13. Write views
 14. Create templates
+15. Work for signup and login
+16. Bootstrap template setup
+17. Home page and detail page design
+18. Review and forms
 
 
 ### Installations

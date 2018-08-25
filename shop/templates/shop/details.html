@@ -1,15 +1,16 @@
 {% extends "shop/base.html" %}
 {% load bootstrap3 %}
-{% block carousel %}{% endblock %}
+
+{% block title %}
+    {{ product.title }} - eCommerce Shop
+{% endblock %}
 {% block content %}
 
     <div class="card mt-4">
-            <img class="card-img-top img-fluid"
-                 height="200px"
-                 src="/media/{{ product.image }}" alt="">
+            <img class="card-img-top img-fluid" src="/media/{{ product.image }}" alt="">
             <div class="card-body">
               <h3 class="card-title">{{ product.title }}</h3>
-              <h4>{{ product.price }}</h4>
+              <h4>Rs. {{ product.price }}</h4>
               <p class="card-text">{{ product.description }}</p>
               <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
               4.0 stars
@@ -34,7 +35,7 @@
                 <form method="POST" action="{% url "shop:review" product.slug %}">
                     {% csrf_token %}
                     {% bootstrap_form reviewform %}
-                    <input type="submit" value="Submit your Review" class="btn btn-success">
+                    <input type="submit" value="Submit your Review" class="btn btn-primary">
 
                 </form>
 
@@ -48,6 +49,12 @@
     {% elif carts|length == 1 %} {{ carts|length }} item
     {% else %} {{ carts|length }} items
     {% endif %}
+{% endblock %}
+
+{% block categories %}
+    {% for cat in categories %}
+        <a href="{% url 'shop:category' cat.slug %}" class="list-group-item">{{ cat.title }}</a>
+    {% endfor %}
 {% endblock %}
 
 {% block jscode %}

@@ -1,10 +1,8 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db.models import Q
-from django.http import JsonResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
-from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
@@ -20,22 +18,28 @@ def home(request):
     data = {
         "categories": categories,
         "products": products,
-        "carts":carts
+        "carts": carts,
             }
     return render(request, "shop/index.html", data)
 
 
 def details(request, slug):
-    product = Product.objects.get(slug=slug)
+    product = get_object_or_404(Product, slug=slug)
+    categories = Category.objects.all()
     reviewform = ReviewForm()
     carts = Product.objects.filter(slug__in=request.session.get('items', []))
-    data = {"product": product, "reviewform": reviewform, "carts": carts}
+    data = {
+        "product": product,
+        "reviewform": reviewform,
+        "carts": carts,
+        "categories": categories
+    }
     return render(request, "shop/details.html", data)
 
 
 def review(request, slug):
-    product = Product.objects.get(slug=slug)
-    if request.method == "POST":
+    product = get_object_or_404(Product, slug=slug)
+    if request.user.is_authenticated and request.method == "POST":
         form = ReviewForm(request.POST)
         if form.is_valid():
             review = form.save(commit=False)
@@ -93,7 +97,7 @@ def product_search(request):
 def add_to_cart(request):
     if request.method == 'POST':
         slug = request.POST.get("slug", "")
-        product = Product.objects.get(slug=slug)
+        product = get_object_or_404(Product, slug=slug)
         items = request.session.get('items', [])
         if slug not in items:
             amount = request.session.get('cart_amount', 0.0)
@@ -116,3 +120,11 @@ def checkout(request):
     request.session['items'] = []
     request.session['cart_amount'] = 0
     return redirect("shop:home")
+
+
+@api_view(['GET'])
+def categories(request, slug):
+    category = get_object_or_404(Category, slug=slug)
+    products = Product.objects.filter(category=category)
+    serializer = ProductSerializer(products, many=True)
+    return Response(serializer.data)
