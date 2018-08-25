@@ -1,4 +1,4 @@
-django-autoslug==1.9.3
+django-autoslug==1.9.4-dev
 pillow==4.1.1
 django-bootstrap3==10.0.1
 djangorestframework==3.8.2

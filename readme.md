@@ -1,15 +1,17 @@
-# eCommerce Django Project
+# eCommerce Shop Django Project
 
-### Steps
+This project demo is live on [http://ecommerce.hem.info.np](http://ecommerce.hem.info.np)
+
+### Development Steps
 1. Requirements Gathering
 2. Create Project (django-admin startproject ecommerce)
 3. Create App (python manage.py startapp shop)
 4. Write Models
 5. Add app in settings.py
 6. Register app in admin
-7. Create migrations (python manage.py makemigrations shop)
-8. Migrate (python manage.py migrate)
-9. Install dependencies (pip install django-autoslug pillow)
+7. Install dependencies (pip install -r requirements.txt)
+8. Create migrations (python manage.py makemigrations shop)
+9. Migrate (python manage.py migrate)
 10. Media file handling
 11. Add meta in models
 12. Create urls for frontend
@@ -19,10 +21,16 @@
 16. Bootstrap template setup
 17. Home page and detail page design
 18. Review and forms
+19. Other remaining features
+20. Finalizing project
 
 
 ### Installations
+- git clone https://gitlab.com/hereshem/ecommerce-shop
+- cd ecommerce-shop
 - pip install -r requirements.txt
+- python manage.py migrate
+- python manage.py runserver
 
 
 ### eCommerce Project Features
