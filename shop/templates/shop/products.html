@@ -2,9 +2,9 @@
 
 {% block content %}
         {% for p in products %}
-            <div class="card mt-4">
+            <div class="card mt-4 {% if forloop.last %}mb-4{% endif %}">
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-4">
                         <a href="{% url 'shop:detail' p.slug %}"><img src="/media/{{ p.image }}" class="img-fluid" alt="{{ p.title }}" ></a>
                     </div>
                     <div class="col">
@@ -12,7 +12,7 @@
                             <h4 class="card-title"><a href="{% url 'shop:detail' p.slug %}">{{ p.title }}</a></h4>
                             <h5 class="card-text">{{ p.description }}</h5>
                             <p class="card-text">Rs. {{ p.price }}</p>
-                            <a href="#" name="{{ p.slug }}" class="btn btn-success add_to_cart">Add to Cart</a>
+                            <a href="#" name="{{ p.slug }}" class="btn btn-success add_to_cart mb-4">Add to Cart</a>
                         </div>
                     </div>
                 </div>
