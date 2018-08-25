@@ -6,7 +6,7 @@
     <meta name="description" content="eCommerce project sample in django">
     <meta name="author" content="Hem Shrestha">
 
-    <title>{% block title %}eCommerce Shop{% endblock %}</title>
+    <title>{% block title %}{{ title }}{% endblock %} - eCommerce Shop</title>
     <script src="/static/shop/js/jquery.min.js"></script>
     <link href="/static/shop/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -27,9 +27,6 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Products</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Categories</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -54,18 +51,31 @@
             </form>
 
             <a href="{% url 'shop:my_cart' %}" class="btn btn-outline-success my-2 my-sm-0 offset-1">
-                <span class="glyphicon">🛒</span> {% block cart_count %}No item{% endblock %}
+                <span class="glyphicon">🛒</span>
+                <span id="cart_count">
+                {% block cart_count %}
+                    {% if carts|length == 0 %} No items
+                    {% elif carts|length == 1 %} 1 item
+                    {% else %} {{ carts|length }} items
+                    {% endif %}
+                {% endblock %}
+                </span>
             </a>
         </div>
     </nav>
 
     <!-- Page Content -->
     <div class="container">
+    {% block main_content %}
         <div class="row">
             <div class="col-lg-3">
                 <h1 class="my-4">eCommerce Shop</h1>
                 <div class="list-group">
-                    {% block categories %}{% endblock %}
+                    {% block categories %}
+                        {% for cat in categories %}
+                            <a href="{% url 'shop:category' cat.slug %}" class="list-group-item">{{ cat.title }}</a>
+                        {% endfor %}
+                    {% endblock %}
                 </div>
             </div>
             <div class="col-lg-9">
@@ -73,6 +83,7 @@
                 {% block content %}{% endblock %}
             </div>
         </div>
+    {% endblock %}
     </div>
 
     <!-- Footer -->

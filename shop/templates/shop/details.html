@@ -1,13 +1,9 @@
 {% extends "shop/base.html" %}
 {% load bootstrap3 %}
 
-{% block title %}
-    {{ product.title }} - eCommerce Shop
-{% endblock %}
 {% block content %}
-
     <div class="card mt-4">
-            <img class="card-img-top img-fluid" src="/media/{{ product.image }}" alt="">
+            <img class="card-img-top img-fluid" src="/media/{{ product.image }}" alt="{{ product.title }}">
             <div class="card-body">
               <h3 class="card-title">{{ product.title }}</h3>
               <h4>Rs. {{ product.price }}</h4>
@@ -16,7 +12,7 @@
               4.0 stars
                 <p></p>
                 <p>
-                    <button id="add_to_cart" name="{{ product.slug }}" class="btn btn-success">Add to Cart</button>
+                    <a href="#" name="{{ product.slug }}" class="btn btn-success add_to_cart">Add to Cart</a>
                 </p>
             </div>
           </div>
@@ -45,31 +41,17 @@
 
 {% endblock %}
 
-{% block cart_count %}
-    {% if carts|length == 0 %} No items
-    {% elif carts|length == 1 %} {{ carts|length }} item
-    {% else %} {{ carts|length }} items
-    {% endif %}
-{% endblock %}
-
-{% block categories %}
-    {% for cat in categories %}
-        <a href="{% url 'shop:category' cat.slug %}" class="list-group-item">{{ cat.title }}</a>
-    {% endfor %}
-{% endblock %}
-
 {% block jscode %}
     <script>
         $(document).ready(function () {
-            $('#add_to_cart').on('click', function () {
+            $('.add_to_cart').on('click', function () {
                 data = {"slug": this.name, "csrfmiddlewaretoken":"{{ csrf_token }}" }
                 $.post("{% url 'shop:add_to_cart' %}", data)
                     .done(function (response) {
-                        console.log(response);
-                        if (response) {
-                            alert(response.title + " added to cart");
-                            location.reload();
+                        if (response.status == "ok") {
+                            $('#cart_count').text(response.count + " items");
                         }
+                        alert(response.message);
                     })
             })
         })

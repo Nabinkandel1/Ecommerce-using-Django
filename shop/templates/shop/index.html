@@ -41,7 +41,7 @@
                   <h4 class="card-title">
                     <a href="{% url 'shop:detail' product.slug %}">{{ product.title }}</a>
                   </h4>
-                  <h5>{{ product.price }}</h5>
+                  <h5>Rs. {{ product.price }}</h5>
                   <p class="card-text">{{ product.description }}</p>
                 </div>
                 <div class="card-footer">
@@ -51,17 +51,4 @@
             </div>
         {% endfor %}
     </div>
-{% endblock %}
-
-{% block cart_count %}
-    {% if carts|length == 0 %} No items
-    {% elif carts|length == 1 %} {{ carts|length }} item
-    {% else %} {{ carts|length }} items
-    {% endif %}
-{% endblock %}
-
-{% block categories %}
-    {% for cat in categories %}
-        <a href="{% url 'shop:category' cat.slug %}" class="list-group-item">{{ cat.title }}</a>
-    {% endfor %}
 {% endblock %}
