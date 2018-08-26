@@ -80,14 +80,6 @@ def mylogout(request):
     return redirect("shop:home")
 
 
-@api_view(['GET'])
-def product_search_api(request):
-    query = request.GET.get("q", "")
-    products = Product.objects.filter(Q(title__contains=query) | Q(description__contains=query))
-    serializer = ProductSerializer(products, many=True)
-    return Response(serializer.data)
-
-
 def product_search(request):
     query = request.GET.get("q", "")
     data = get_payload(request, query + " - search result")
@@ -114,6 +106,12 @@ def categories(request, slug):
     return render(request, "shop/products.html", data)
 
 
+def products(request):
+    data = get_payload(request, "Products")
+    data["products"] = Product.objects.filter(active=True)
+    return render(request, "shop/products.html", data)
+
+
 def add_to_cart(request):
     if request.method == 'POST':
         slug = request.POST.get("slug", "")
@@ -130,4 +128,12 @@ def add_to_cart(request):
             return JsonResponse({"status": "fail", "message": "Item already added"})
         return JsonResponse({"status": "fail", "message": "Item not found"})
     return JsonResponse({"status": "fail", "message": "Only post method allowed"})
+
+
+@api_view(['GET'])
+def api_search(request):
+    query = request.GET.get("q", "")
+    products = Product.objects.filter(Q(title__contains=query) | Q(description__contains=query))
+    serializer = ProductSerializer(products, many=True)
+    return Response(serializer.data)
 
