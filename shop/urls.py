@@ -16,6 +16,6 @@ urlpatterns = [
     path('checkout/', views.checkout, name="checkout"),
     path('category/<slug>/', views.categories, name="category"),
     path('products/', views.products, name="products"),
-    path('api/products/', views.api_search, name="api_products"),
+    path('api/products/', views.api_products, name="api_products"),
 
 ]

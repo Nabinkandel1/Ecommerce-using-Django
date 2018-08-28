@@ -131,7 +131,7 @@ def add_to_cart(request):
 
 
 @api_view(['GET'])
-def api_search(request):
+def api_products(request):
     query = request.GET.get("q", "")
     products = Product.objects.filter(Q(title__contains=query) | Q(description__contains=query))
     serializer = ProductSerializer(products, many=True)
