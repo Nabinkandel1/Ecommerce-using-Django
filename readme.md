@@ -1,7 +1,5 @@
 # eCommerce Shop Django Project
 
-This project demo is live on [http://ecommerce.hem.info.np](http://ecommerce.hem.info.np)
-
 ### Development Steps
 1. Requirements Gathering
 2. Create Project (django-admin startproject ecommerce)
@@ -26,7 +24,6 @@ This project demo is live on [http://ecommerce.hem.info.np](http://ecommerce.hem
 
 
 ### Installations
-- git clone https://gitlab.com/hereshem/ecommerce-shop
 - cd ecommerce-shop
 - pip install -r requirements.txt
 - python manage.py migrate
