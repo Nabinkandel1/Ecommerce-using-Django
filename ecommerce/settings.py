@@ -25,7 +25,7 @@ SECRET_KEY = '^j=iw9nx#&y757uq_(9u@)+1aytc5y4bh63agzuoqjt^r9pspz'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', 'ecommerce.hem.info.np']
+ALLOWED_HOSTS = ['*', 'ecommerce.hem.info.np']
 
 
 # Application definition
@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'shop',
-    'bootstrap3',
+    'bootstrap4',
     'rest_framework',
 ]
 
@@ -57,7 +57,7 @@ ROOT_URLCONF = 'ecommerce.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR,'shop/templates/shop')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -125,3 +125,5 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL='account/login'

@@ -51,3 +51,21 @@ class Review(models.Model):
 
     def __str__(self):
         return self.review
+
+class Contact(models.Model):
+    full_name = models.CharField(max_length=255, blank=True)
+    address = models.CharField(max_length=255, blank=True)
+    email = models.EmailField(max_length=255, blank=True)
+    phone_number = models.CharField(max_length=255, blank=True)
+    message = models.TextField(blank=True)
+
+    def toDict(self):
+        return {
+            'full_name': self.full_name,
+            'address': self.address,
+            'email': self.email,
+            'phone_number': self.phone_number,
+            'message': self.message
+        }
+    def __str__(self):
+        return self.full_name

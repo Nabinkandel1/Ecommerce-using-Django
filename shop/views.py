@@ -1,15 +1,25 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db.models import Q
 from django.http import JsonResponse
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
+from pdfkit import pdfkit
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-
 from shop.forms import SignUpForm, ReviewForm
-from shop.models import Category, Product, Review
 from shop.serializers import ProductSerializer
+from django.http import HttpResponse
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect
+from django.views import View
+import pdfkit
+import json
+
+from ecommerce import settings
+from shop.forms import ContactForm
+from shop.models import Contact, Category, Product
+
 
 
 def get_payload(request, title=""):
@@ -136,4 +146,79 @@ def api_products(request):
     products = Product.objects.filter(Q(title__contains=query) | Q(description__contains=query))
     serializer = ProductSerializer(products, many=True)
     return Response(serializer.data)
+
+
+class Contact1(View):
+    def get(self, request):
+        form  = ContactForm()
+        return render(request, 'contactform.html', {'form': form})
+        pass
+    def post(self, request):
+        form = ContactForm(request.POST)
+        form.save(commit=True)
+        return HttpResponseRedirect("/")
+        # contact.full_name = 'Mr' + contact.full_name
+        # contact.save()
+        pass
+
+class Contact2(View):
+    # @login_required(login_url='/accounts/login/')
+    def get(self, request):
+        if not request.user.is_authenticated:
+            return redirect('../%s?next=%s' % (settings.LOGIN_URL, request.path))
+        else:
+            return render(request, 'contact.html')
+    def post(self, request):
+        name = request.POST.get('fname')
+        email = request.POST.get('email')
+        address = request.POST.get('address')
+        phone = request.POST.get('phone')
+        message = request.POST.get('message')
+        # data = "{name}, {email}, {address}, {message}".format(name=name, email=email, address= address, message=message)
+        contact = Contact(full_name=name, email=email, address=address, phone_number=phone, message=message)
+        contact.save()
+        return HttpResponse("Contact is sent successfully")
+
+def contact(request):
+    if request.method == 'GET':
+        return render(request, 'contact.html')
+    else:
+        name = request.POST.get('fname')
+        email = request.POST.get('email')
+        address = request.POST.get('address')
+        phone = request.POST.get('phone')
+        message = request.POST.get('message')
+        # data = "{name}, {email}, {address}, {message}".format(name=name, email=email, address= address, message=message)
+        contact = Contact(full_name=name, email=email, address=address, phone_number=phone, message=message)
+        contact.save()
+        return HttpResponse("Contact is sent successfully")
+
+
+def contactList(request):
+    mContactList = Contact.objects.all()
+    return render(request, 'contactlist.html', {'data':mContactList})
+
+def string_to_pdf(request, data):
+    filename = 'so.pdf'
+    pdf = pdfkit.from_string(data, filename)
+    response = HttpResponse(pdf, content_type='application/pdf')
+    response['Content-Disposition'] = 'inline; filename="' + filename + '"'
+
+    return response
+
+def pdf(request):
+    # Create a URL of our project and go to the template route
+    projectUrl = request.get_host()+ "/contact/list"
+    pdf = pdfkit.from_url(projectUrl, False)
+    # Generate download
+    response = HttpResponse(pdf, content_type='application/pdf')
+    response['Content-Disposition'] = 'inline; filename="ourcodeworld.pdf"'
+    return response
+
+def contactAPI(request):
+    contactList = Contact.objects.all()
+    response = []
+    for contact in contactList :
+        response.append(contact.toDict())
+    return HttpResponse(json.dumps(response))
 

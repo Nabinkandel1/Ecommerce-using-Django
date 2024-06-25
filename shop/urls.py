@@ -17,5 +17,8 @@ urlpatterns = [
     path('category/<slug>/', views.categories, name="category"),
     path('products/', views.products, name="products"),
     path('api/products/', views.api_products, name="api_products"),
+    path('contact/list/', views.contactList, name="contactList"),
+    path('contact/', views.contact, name="contact"),
+    path('api/category/',views.contactAPI, name="contactAPI"),
 
 ]
